@@ -15,11 +15,11 @@ export function num(n: number, locale: Locale): string {
 }
 
 export function time(ms: number | Date, locale: Locale): string {
-  return new Intl.DateTimeFormat(intlLocale[locale], { hour: "2-digit", minute: "2-digit" }).format(ms)
+  return new Intl.DateTimeFormat(intlLocale[locale], { hour: "numeric", minute: "2-digit" }).format(ms)
 }
 
 export function dateTime(ms: number, locale: Locale): string {
-  return new Intl.DateTimeFormat(intlLocale[locale], { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" }).format(ms)
+  return new Intl.DateTimeFormat(intlLocale[locale], { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" }).format(ms)
 }
 
 export function shortDate(ms: number, locale: Locale): string {

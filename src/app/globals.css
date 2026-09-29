@@ -157,6 +157,7 @@
   h3,
   h4 {
     font-family: var(--font-display);
+    font-variant-numeric: lining-nums;
     font-weight: 700;
     line-height: 1.1;
     letter-spacing: -0.01em;
@@ -175,6 +176,7 @@
 @layer utilities {
   .font-display {
     font-family: var(--font-display);
+    font-variant-numeric: lining-nums;
   }
   .eyebrow {
     font-size: 0.75rem;
@@ -183,7 +185,7 @@
     text-transform: uppercase;
   }
   .tnum {
-    font-variant-numeric: tabular-nums;
+    font-variant-numeric: lining-nums tabular-nums;
   }
   /* Hard, flat "crate" shadow: no blur. */
   .shadow-crate {
@@ -213,6 +215,23 @@
     .container-page {
       padding-inline: 1.5rem;
     }
+  }
+}
+
+/* Printing from the grower dashboard prints only the stand sign. */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .print-area,
+  .print-area * {
+    visibility: visible;
+  }
+  .print-area {
+    position: absolute;
+    inset: 0 auto auto 0;
+    width: 12cm;
+    max-width: none;
   }
 }
 
