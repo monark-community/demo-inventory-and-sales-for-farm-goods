@@ -64,7 +64,7 @@ All routes live under `/{locale}` (`en`, `fr`); `/` redirects to the visitor's p
 
 | Route | Purpose | Sections, in order |
 |-|-|-|
-| `/` | Convince in 30 seconds, then send people into the demo | Hero (photo + live UI) · "The honesty box works until it doesn't" (photo of a real cash box, three failures, the Bazarius answer) · "One stand, two screens" (buyer shelf and grower ledger rendered from the demo's own components and seed data) · Features (four, each with a small built-in visual) · Grower band (photo of a farmer in the field + what setup takes) · Closing CTA |
+| `/` | Convince in 30 seconds, then send people into the demo | Hero (photo + live UI) · "The honesty box works until it doesn't" (photo of a real cash box, three failures, the Bazarius answer) · "One stand, two screens" (buyer shelf and grower ledger rendered on the server from the demo's catalog, in the demo's visual language) · Features (six, each with a small built-in visual) · Grower band (photo of a farmer in the field + what setup takes) · Closing CTA |
 | `/how-it-works` | For growers deciding whether to trust a stand to it, and for developers/students reading the mechanics | At the stand (3 steps) · At the farm (3 steps) · What the stand contract guarantees (diagram built in SVG: basket → purchase → stock + takings, with the revert paths) · Setting up a stand (the kit) · FAQ (6) · CTA |
 | `/app` | Demo entry: "scan" a stand sign | Viewfinder with three stand signs to scan · nearby stands list · role explainer (shopper vs grower) |
 | `/app/stand/[standId]` | Buyer flow: shelf, basket, pay, receipt | Stand header (farm, place, stand clock, markdown hour) · stamp card · shelf · basket bar/sheet · checkout panel · receipt · "Meanwhile at the farm" panel (desktop side rail) |
@@ -335,4 +335,8 @@ Reasoning: growers compare against card terminals (roughly 2.6–2.9% plus hardw
 - **Stand clock:** markdowns depend on the stand's local time; the demo clock follows the visitor's clock and can be jumped past 17:00 from the demo controls.
 - **Photos:** found through Unsplash's public pages; only free-licence images, verified on each photo page.
 - **Registry components:** re-themed `@monark` `wallet`, `connect-wallet`, `token-amount`, `network-badge`, `tx-status`; no `swap-form` or `nft-card` (no swap, and the stamp card is not presented as an NFT to growers).
-- **Extra dependency:** `uqr` (tiny, zero-dependency QR encoder) so the stand sign carries a real, scannable QR code.
+- **Extra dependency:** `uqr` (tiny, zero-dependency QR encoder) so the stand sign carries a real, scannable QR code. `react-jazzicon` comes with the registry `wallet` component.
+- **Toasts** are used only for background events (demo reset, a passer-by purchase, a test top-up): bottom-left on desktop, clear of the basket, receipt and farm rail on the right; top of the screen on phones, clear of the basket bar. Every flow result is shown inline where the action happened.
+- **Layout on phones:** the basket is a bottom bar that opens a sheet (checkout and receipt live there); the farm rail sits under the shelf; on the grower dashboard alerts come before the shelf editor.
+- **Units** read as "per dozen / par douzaine"; single items are "per item / par unité".
+- **Header:** as an independent brand, Bazarius keeps its own header (wordmark, two links, EN/FR, theme, "Open the stand"); the Monark standard header does not apply.
