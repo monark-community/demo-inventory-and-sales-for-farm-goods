@@ -343,7 +343,7 @@ const fr: Dictionary = {
       inBasket: "{n} dans le panier",
       was: "avant {price}",
       off: "−{pct} % ce soir",
-      per: "le {unit}",
+      per: "par {unit}",
       unavailable: "Pas en vente aujourd'hui",
       notFound: "Impossible de trouver ce kiosque.",
       loading: "Chargement de la tablette…",
