@@ -1,0 +1,396 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Bazarius identity ("hand-painted sign, honest ledger"), overriding the
+ * @monark/ui base theme variables. See docs/site-plan.md section 8 for the
+ * reasoning and the WCAG AA ratios of every pair.
+ */
+@theme inline {
+  --font-sans: var(--font-figtree), ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-display: var(--font-zilla), ui-serif, Georgia, serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, "Cascadia Mono", monospace;
+  --font-heading: var(--font-display);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-paper: var(--paper);
+  --color-crate-beet: var(--crate-beet);
+  --color-crate-leaf: var(--crate-leaf);
+  --color-crate-marigold: var(--crate-marigold);
+  --color-crate-soil: var(--crate-soil);
+  --color-crate-slate: var(--crate-slate);
+  --radius-sm: calc(var(--radius) * 0.5);
+  --radius-md: calc(var(--radius) * 0.75);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.5);
+  --radius-2xl: calc(var(--radius) * 2);
+  --radius-3xl: calc(var(--radius) * 2.5);
+  --radius-4xl: calc(var(--radius) * 3);
+}
+
+:root {
+  --radius: 0.5rem;
+  --background: #f3eee3;
+  --foreground: #211b14;
+  --card: #fbf8f1;
+  --card-foreground: var(--foreground);
+  --popover: var(--card);
+  --popover-foreground: var(--foreground);
+  --paper: #fffdf8;
+  --primary: #8a2a4f;
+  --primary-foreground: #fff7f2;
+  --secondary: #e6ddcb;
+  --secondary-foreground: var(--foreground);
+  --muted: #e9e2d4;
+  --muted-foreground: #5f5446;
+  --accent: #f2c14e;
+  --accent-foreground: #211b14;
+  --destructive: #b23a12;
+  --destructive-foreground: #ffffff;
+  --border: #d8ccb6;
+  --input: #978770;
+  --ring: #8a2a4f;
+  --success: #2f6b3a;
+  --warning: #8a5a00;
+  --chart-1: #8a2a4f;
+  --chart-2: #3f7d45;
+  --chart-3: #b9861a;
+  --chart-4: #7a5b3a;
+  --chart-5: #4f6d7a;
+  /* Crate-label tints behind produce icons (icon uses foreground). */
+  --crate-beet: #efd3dc;
+  --crate-leaf: #d5e6cf;
+  --crate-marigold: #f6e2ae;
+  --crate-soil: #e7d6c1;
+  --crate-slate: #d3e0e5;
+  --sidebar: var(--card);
+  --sidebar-foreground: var(--foreground);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: var(--secondary);
+  --sidebar-accent-foreground: var(--foreground);
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--ring);
+}
+
+.dark {
+  --background: #161a15;
+  --foreground: #f0eadd;
+  --card: #1f241e;
+  --paper: #242a23;
+  --primary: #e890b5;
+  --primary-foreground: #22101a;
+  --secondary: #2d332b;
+  --muted: #2a2f28;
+  --muted-foreground: #b7ae9d;
+  --accent: #f2c14e;
+  --accent-foreground: #161a15;
+  --destructive: #f2825d;
+  --destructive-foreground: #161a15;
+  --border: #394036;
+  --input: #6e7766;
+  --ring: #e890b5;
+  --success: #86c98a;
+  --warning: #e9b949;
+  --chart-1: #e890b5;
+  --chart-2: #86c98a;
+  --chart-3: #f2c14e;
+  --chart-4: #c9a27a;
+  --chart-5: #8fb3c2;
+  --crate-beet: #4a2434;
+  --crate-leaf: #2c4230;
+  --crate-marigold: #4d3f1a;
+  --crate-soil: #43372a;
+  --crate-slate: #2b3d44;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    @apply font-sans;
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: 6rem;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    line-height: 1.6;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+  ::selection {
+    background: var(--accent);
+    color: var(--accent-foreground);
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: var(--font-display);
+  }
+  .eyebrow {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .tnum {
+    font-variant-numeric: tabular-nums;
+  }
+  /* Hard, flat "crate" shadow: no blur. */
+  .shadow-crate {
+    box-shadow: 3px 3px 0 0 color-mix(in oklab, var(--foreground) 14%, transparent);
+  }
+  .shadow-crate-sm {
+    box-shadow: 2px 2px 0 0 color-mix(in oklab, var(--foreground) 12%, transparent);
+  }
+  /* Receipt paper: dashed perforation on top, torn zig-zag at the bottom. */
+  .receipt-edge {
+    --zz: 10px;
+    -webkit-mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / var(--zz) 100%;
+    mask: conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / var(--zz) 100%;
+    padding-bottom: calc(var(--zz) / 2 + 1rem);
+  }
+  /* Price tag with a notched corner. */
+  .tag-notch {
+    clip-path: polygon(10px 0, 100% 0, 100% 100%, 10px 100%, 0 50%);
+  }
+  .container-page {
+    width: 100%;
+    max-width: 76rem;
+    margin-inline: auto;
+    padding-inline: 1rem;
+  }
+  @media (min-width: 640px) {
+    .container-page {
+      padding-inline: 1.5rem;
+    }
+  }
+}
+
+/* ---- Motion (all disabled under prefers-reduced-motion) ---------------- */
+
+@keyframes bz-stamp {
+  0% {
+    opacity: 0;
+    transform: rotate(-14deg) scale(1.6);
+  }
+  60% {
+    opacity: 1;
+    transform: rotate(-8deg) scale(0.94);
+  }
+  100% {
+    opacity: 1;
+    transform: rotate(-8deg) scale(1);
+  }
+}
+.bz-stamp {
+  animation: bz-stamp 280ms cubic-bezier(0.2, 0.9, 0.3, 1.2) both;
+}
+
+@keyframes bz-print {
+  from {
+    opacity: 0;
+    transform: translateY(-14px);
+    clip-path: inset(0 0 100% 0);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    clip-path: inset(0 0 0 0);
+  }
+}
+.bz-print {
+  animation: bz-print 420ms ease-out both;
+}
+
+@keyframes bz-roll {
+  from {
+    transform: translateY(-60%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+.bz-roll {
+  display: inline-block;
+  animation: bz-roll 260ms ease-out both;
+}
+
+@keyframes bz-punch {
+  0% {
+    transform: scale(0.3);
+  }
+  70% {
+    transform: scale(1.15);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+.bz-punch {
+  animation: bz-punch 300ms ease-out both;
+}
+
+@keyframes bz-scan {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(var(--scan-h, 200px));
+  }
+}
+.bz-scanline {
+  animation: bz-scan 2.4s ease-in-out infinite;
+}
+
+/* Hero loop: the tomato tally drops and a ticket prints at the farm. */
+@keyframes bz-hero-old {
+  0%,
+  38% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  44%,
+  94% {
+    opacity: 0;
+    transform: translateY(40%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes bz-hero-new {
+  0%,
+  38% {
+    opacity: 0;
+    transform: translateY(-40%);
+  }
+  44%,
+  94% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-40%);
+  }
+}
+@keyframes bz-hero-ticket {
+  0%,
+  40% {
+    opacity: 0;
+    transform: translateY(-12px);
+    clip-path: inset(0 0 100% 0);
+  }
+  48%,
+  92% {
+    opacity: 1;
+    transform: translateY(0);
+    clip-path: inset(0 0 0 0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(0);
+    clip-path: inset(0 0 0 0);
+  }
+}
+@keyframes bz-hero-tap {
+  0%,
+  26% {
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(0.94);
+  }
+  34%,
+  100% {
+    transform: scale(1);
+  }
+}
+.bz-hero-old {
+  animation: bz-hero-old 6s ease-in-out infinite;
+}
+.bz-hero-new {
+  animation: bz-hero-new 6s ease-in-out infinite;
+}
+.bz-hero-ticket {
+  animation: bz-hero-ticket 6s ease-out infinite;
+}
+.bz-hero-tap {
+  animation: bz-hero-tap 6s ease-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .bz-hero-old {
+    animation: none;
+    opacity: 0;
+  }
+  .bz-hero-new,
+  .bz-hero-ticket {
+    animation: none;
+    opacity: 1;
+    clip-path: none;
+    transform: none;
+  }
+}
