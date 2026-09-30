@@ -105,7 +105,6 @@ function VerifyForm({ demo }: { demo: DemoState }) {
       <h2 id={`${id}-title`} className="text-xl">
         {r.verifyTitle}
       </h2>
-      <p className="mt-1 text-sm text-muted-foreground">{r.verifyBody}</p>
       <form onSubmit={submit} noValidate className="mt-4 space-y-2">
         <Label htmlFor={id}>{r.verifyLabel}</Label>
         <div className="flex flex-col gap-2 sm:flex-row">
@@ -220,9 +219,7 @@ export function ReceiptsView() {
   return (
     <div className="container-page grid gap-10 py-8 lg:grid-cols-[1fr_22rem] lg:py-12">
       <div>
-        <p className="eyebrow text-primary">{r.eyebrow}</p>
-        <h1 className="mt-2 text-3xl sm:text-4xl">{r.title}</h1>
-        <p className="mt-3 max-w-2xl text-muted-foreground">{r.body}</p>
+        <h1 className="text-3xl sm:text-4xl">{r.title}</h1>
         <div className="mt-8">{body}</div>
       </div>
       <aside>

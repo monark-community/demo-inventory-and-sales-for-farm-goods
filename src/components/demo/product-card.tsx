@@ -65,7 +65,7 @@ export function ProductCard({ product: p, qty, markdownOn, disabled, onChange }:
         {discounted && (
           <span className="tag-notch bg-accent py-0.5 pr-2 pl-3.5 text-xs font-bold text-accent-foreground">{t(s.off, { pct: p.markdownPct })}</span>
         )}
-        {!soldOut && !unavailable && p.maxPerOrder < 99 && <span className="text-xs text-muted-foreground">{t(s.limit, { n: p.maxPerOrder })}</span>}
+        {!soldOut && !unavailable && qty > 0 && p.maxPerOrder < 99 && <span className="text-xs text-muted-foreground">{t(s.limit, { n: p.maxPerOrder })}</span>}
       </div>
 
       <div className="mt-auto pt-3">

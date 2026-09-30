@@ -5,6 +5,7 @@ import { forwardRef, useImperativeHandle, useState } from "react"
 
 import { ProduceBadge } from "@/components/produce/produce-icon"
 import { Button } from "@/components/ui/button"
+import { InfoTip } from "@/components/ui/info-tip"
 import { Input } from "@/components/ui/input"
 import { Switch } from "@/components/ui/switch"
 import { plural, t } from "@/i18n/t"
@@ -126,12 +127,10 @@ export const ShelfEditor = forwardRef<ShelfEditorHandle, { standId: string; demo
   return (
     <section aria-labelledby="shelf-editor-title" className="rounded-lg border bg-card">
       <div className="border-b p-4 sm:p-5">
-        <h2 id="shelf-editor-title" className="text-xl">
+        <h2 id="shelf-editor-title" className="flex items-center gap-1 text-xl">
           {f.shelfTitle}
+          <InfoTip label={f.shelfInfoLabel}>{t(f.shelfBody, { time: clockLabel(stand.markdownFrom, locale) })}</InfoTip>
         </h2>
-        <p className="mt-1 text-sm text-muted-foreground">
-          {f.shelfBody} {t(f.markdownHint, { time: clockLabel(stand.markdownFrom, locale) })}
-        </p>
       </div>
 
       <div className="hidden grid-cols-[minmax(10rem,1.5fr)_6.5rem_9.5rem_5rem_7rem_4rem] gap-3 border-b px-5 py-2 text-xs font-semibold text-muted-foreground xl:grid">

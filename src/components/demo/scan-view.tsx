@@ -1,6 +1,6 @@
 "use client"
 
-import { ArrowRight, MapPin, ScanLine, Sprout } from "lucide-react"
+import { MapPin, ScanLine } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useEffect, useRef, useState } from "react"
@@ -40,11 +40,9 @@ export function ScanView({ origin }: { origin: string }) {
   return (
     <div className="container-page grid gap-10 py-8 lg:grid-cols-[1.1fr_0.9fr] lg:py-12">
       <section aria-labelledby="scan-title">
-        <p className="eyebrow text-primary">{s.eyebrow}</p>
-        <h1 id="scan-title" className="mt-2 text-3xl sm:text-4xl">
+        <h1 id="scan-title" className="text-3xl sm:text-4xl">
           {s.title}
         </h1>
-        <p className="mt-3 max-w-xl text-muted-foreground">{s.body}</p>
 
         <div
           role="group"
@@ -96,7 +94,7 @@ export function ScanView({ origin }: { origin: string }) {
         </div>
       </section>
 
-      <aside className="space-y-6">
+      <aside>
         <section aria-labelledby="nearby-title" className="rounded-lg border bg-card p-5">
           <h2 id="nearby-title" className="text-xl">
             {s.nearby}
@@ -123,20 +121,6 @@ export function ScanView({ origin }: { origin: string }) {
               )
             })}
           </ul>
-        </section>
-        <section aria-labelledby="roles-title" className="rounded-lg border border-dashed border-input p-5">
-          <h2 id="roles-title" className="text-xl">
-            {s.roleTitle}
-          </h2>
-          <p className="mt-2 text-sm text-muted-foreground">{s.roleShopper}</p>
-          <p className="mt-2 text-sm text-muted-foreground">{s.roleFarmer}</p>
-          <Button asChild variant="link" className="mt-3">
-            <Link href={href(locale, "/app/farm")}>
-              <Sprout aria-hidden="true" />
-              {s.roleCta}
-              <ArrowRight aria-hidden="true" />
-            </Link>
-          </Button>
         </section>
       </aside>
     </div>

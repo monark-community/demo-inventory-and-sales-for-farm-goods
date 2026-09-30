@@ -18,7 +18,6 @@ export function StandSign({ stand, url }: { stand: Stand; url: string }) {
       <h2 id="sign-title" className="text-xl">
         {f.signTitle}
       </h2>
-      <p className="mt-1 text-sm text-muted-foreground">{f.signBody}</p>
       <div className="print-area mx-auto mt-4 max-w-72 rounded-md border-2 border-foreground bg-paper p-4 text-center text-foreground">
         <div className="flex items-center justify-center gap-2">
           <LogoMark className="size-7" />

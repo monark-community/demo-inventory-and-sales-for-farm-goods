@@ -2,6 +2,7 @@
 
 import { Gift } from "lucide-react"
 
+import { InfoTip } from "@/components/ui/info-tip"
 import { t } from "@/i18n/t"
 import { STAMPS_PER_CARD } from "@/lib/demo/catalog"
 import { cn } from "@/lib/utils"
@@ -14,8 +15,13 @@ export function StampCard({ stamps, reward, name, justPunched, className }: { st
   const s = app.stamps
   return (
     <div className={cn("rounded-md border border-dashed border-input bg-paper p-3", className)}>
-      <div className="flex items-baseline justify-between gap-3">
-        <p className="text-sm font-semibold">{name ?? s.title}</p>
+      <div className="flex items-center justify-between gap-3">
+        <p className="flex items-center text-sm font-semibold">
+          {name ?? s.title}
+          <InfoTip label={s.hintLabel} className="-my-1.5 size-7">
+            {s.hint}
+          </InfoTip>
+        </p>
         <p className="text-xs text-muted-foreground tnum">{t(s.progress, { n: stamps })}</p>
       </div>
       <ol className="mt-2 flex gap-1.5" aria-label={t(s.progress, { n: stamps })}>
@@ -36,10 +42,12 @@ export function StampCard({ stamps, reward, name, justPunched, className }: { st
           )
         })}
       </ol>
-      <p className={cn("mt-2 flex items-center gap-1.5 text-xs", reward ? "font-semibold text-success" : "text-muted-foreground")}>
-        {reward && <Gift className="size-3.5" aria-hidden="true" />}
-        {reward ? s.ready : s.hint}
-      </p>
+      {reward && (
+        <p className="mt-2 flex items-center gap-1.5 text-xs font-semibold text-success">
+          <Gift className="size-3.5" aria-hidden="true" />
+          {s.ready}
+        </p>
+      )}
     </div>
   )
 }

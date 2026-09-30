@@ -55,8 +55,7 @@ export default async function HowItWorksPage({ params }: PageProps<"/[locale]/ho
     <>
       <section className="container-page grid gap-10 pt-10 pb-14 md:grid-cols-[1.2fr_0.8fr] md:items-center md:pt-16">
         <div>
-          <p className="eyebrow text-primary">{h.eyebrow}</p>
-          <h1 className="mt-3 text-4xl sm:text-5xl">{h.title}</h1>
+          <h1 className="text-4xl sm:text-5xl">{h.title}</h1>
           <p className="mt-5 max-w-2xl text-lg text-muted-foreground">{h.intro}</p>
         </div>
         <div className="relative mx-auto aspect-[4/5] w-full max-w-xs overflow-hidden rounded-lg border shadow-crate md:max-w-sm">
@@ -71,28 +70,16 @@ export default async function HowItWorksPage({ params }: PageProps<"/[locale]/ho
 
       <section className="border-y bg-card">
         <div className="container-page py-16 md:py-20">
-          <div className="max-w-2xl">
-            <h2 className="text-3xl sm:text-4xl">{h.contract.title}</h2>
-            <p className="mt-3 text-lg text-muted-foreground">{h.contract.body}</p>
-          </div>
+          <h2 className="max-w-2xl text-3xl sm:text-4xl">{h.contract.title}</h2>
           <div className="mt-10 rounded-lg border bg-background p-4 sm:p-6">
             <ContractDiagram d={h.contract.diagram} />
           </div>
-          <ul className="mt-8 grid gap-4 sm:grid-cols-2">
-            {h.contract.guarantees.map((g) => (
-              <li key={g} className="flex gap-3">
-                <Check className="mt-1 size-5 shrink-0 text-success" aria-hidden="true" />
-                <span className="font-medium">{g}</span>
-              </li>
-            ))}
-          </ul>
         </div>
       </section>
 
       <section className="container-page grid gap-10 py-16 md:grid-cols-[0.9fr_1.1fr] md:py-20">
         <div>
           <h2 className="text-3xl sm:text-4xl">{h.kit.title}</h2>
-          <p className="mt-3 text-lg text-muted-foreground">{h.kit.body}</p>
           <ul className="mt-6 space-y-3">
             {h.kit.items.map((k) => (
               <li key={k} className="flex gap-3">

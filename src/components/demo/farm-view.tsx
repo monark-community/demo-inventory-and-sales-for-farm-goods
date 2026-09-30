@@ -27,6 +27,7 @@ function Dashboard({ origin }: { origin: string }) {
   const editor = useRef<ShelfEditorHandle>(null)
   const desktop = useMediaQuery(DESKTOP)
   const [initial] = useState(() => new Set(demo.ledger.map((e) => e.id)))
+  const [allLedger, setAllLedger] = useState(false)
 
   const sales = salesToday(demo, stand.id)
   const items = sales.reduce((n, s) => n + s.lines.reduce((m, l) => m + l.qty, 0), 0)
@@ -72,8 +73,7 @@ function Dashboard({ origin }: { origin: string }) {
 
   return (
     <div className="container-page py-8 lg:py-10">
-      <p className="eyebrow text-primary">{f.eyebrow}</p>
-      <h1 className="mt-2 text-3xl sm:text-4xl">{f.title}</h1>
+      <h1 className="text-3xl sm:text-4xl">{f.title}</h1>
       <p className="mt-2 text-muted-foreground">{t(f.standLine, { stand: stand.name, place: stand.place[locale] })}</p>
 
       <dl className="mt-6 grid grid-cols-2 gap-3 lg:grid-cols-4">
@@ -91,18 +91,12 @@ function Dashboard({ origin }: { origin: string }) {
         <div className="min-w-0 space-y-8">
           {!desktop && alertsBox}
           <ShelfEditor ref={editor} standId={stand.id} demo={demo} />
-          <section className="flex flex-col gap-4 rounded-lg border border-dashed border-input p-5 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-              <h2 className="text-xl">{f.closeDay}</h2>
-              <p className="mt-1 text-sm text-muted-foreground">{f.closeDayBody}</p>
-            </div>
-            <Button asChild size="lg" className="shrink-0">
-              <Link href={href(locale, "/app/farm/count")}>
-                {f.closeDay}
-                <ArrowRight aria-hidden="true" />
-              </Link>
-            </Button>
-          </section>
+          <Button asChild size="lg" className="w-full sm:w-auto">
+            <Link href={href(locale, "/app/farm/count")}>
+              {f.closeDay}
+              <ArrowRight aria-hidden="true" />
+            </Link>
+          </Button>
         </div>
 
         <aside className="space-y-6">
@@ -121,12 +115,12 @@ function Dashboard({ origin }: { origin: string }) {
               <p className="mt-2 text-sm text-muted-foreground">{app.ledger.empty}</p>
             ) : (
               <ol className="mt-2 space-y-2" aria-live="polite">
-                {ledgerToday.slice(0, 12).map((e) => (
+                {ledgerToday.slice(0, allLedger ? 12 : 5).map((e) => (
                   <LedgerItem key={e.id} entry={e} demo={demo} fresh={!initial.has(e.id)} compact />
                 ))}
               </ol>
             )}
-            {ledgerEarlier.length > 0 && (
+            {allLedger && ledgerEarlier.length > 0 && (
               <>
                 <h3 className="eyebrow mt-5 font-sans text-muted-foreground">{app.ledger.earlier}</h3>
                 <ol className="mt-2 space-y-2 opacity-80">
@@ -135,6 +129,11 @@ function Dashboard({ origin }: { origin: string }) {
                   ))}
                 </ol>
               </>
+            )}
+            {(ledgerToday.length > 5 || ledgerEarlier.length > 0) && (
+              <Button variant="ghost" size="sm" className="mt-3 text-muted-foreground" aria-expanded={allLedger} onClick={() => setAllLedger((v) => !v)}>
+                {allLedger ? app.ledger.less : app.ledger.more}
+              </Button>
             )}
           </section>
 

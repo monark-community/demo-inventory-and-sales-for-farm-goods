@@ -55,7 +55,6 @@ export function Checkout({ standId, demo, tx, faucetTx, result, onPurchased, onD
           headline={<p className="mb-3 pr-24 text-sm font-semibold text-success">{app.receipt.title}</p>}
         />
         <StampLine added={result.stampAdded} filled={result.cardFilled} stamps={demo.stamps[standId] ?? 0} />
-        <p className="text-sm text-muted-foreground">{t(app.receipt.farmSees, { farmer: stand.farmer })}</p>
         <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
           <Button onClick={onDone}>
             {app.receipt.again}
@@ -194,7 +193,6 @@ export function Checkout({ standId, demo, tx, faucetTx, result, onPurchased, onD
               {connected ? t(b.pay, { amount: tusdc(total, locale) }) : b.connectFirst}
             </Button>
           )}
-          <p className="text-center text-xs text-muted-foreground">{b.stampNote}</p>
         </>
       )}
 

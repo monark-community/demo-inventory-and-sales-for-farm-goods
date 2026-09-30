@@ -34,7 +34,7 @@ export function WalletPrompt() {
           <div className="space-y-4 px-5 py-5">
             <div>
               <DialogTitle className="text-xl">{summary.title}</DialogTitle>
-              <DialogDescription className="mt-1">{p.subtitle}</DialogDescription>
+              <DialogDescription className="sr-only">{p.subtitle}</DialogDescription>
             </div>
             <div className="flex items-center gap-3 rounded-md border bg-paper p-3">
               <WalletAvatar address={addressOf(summary.account)} size={32} />
@@ -78,7 +78,6 @@ export function WalletPrompt() {
                 {valueNotice}
               </p>
             )}
-            <p className="text-xs text-muted-foreground">{p.note}</p>
           </div>
           <div className="grid grid-cols-2 gap-3 border-t px-5 py-4">
             <Button variant="outline" size="lg" onClick={() => request?.resolve(false)}>

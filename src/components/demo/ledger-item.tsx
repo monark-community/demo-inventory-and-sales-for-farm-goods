@@ -19,6 +19,7 @@ export function LedgerItem({ entry, demo, fresh, compact }: { entry: LedgerEntry
   let icon = <ReceiptText className="size-4 text-primary" aria-hidden="true" />
   let text = ""
   let sub: string | null = null
+  let hint: string | undefined
   let amount: string | null = null
   let tone = "bg-paper"
 
@@ -27,7 +28,8 @@ export function LedgerItem({ entry, demo, fresh, compact }: { entry: LedgerEntry
       const sale = demo.sales.find((s) => s.id === entry.saleId)
       if (!sale) return null
       text = t(l.sale, { items: sale.lines.map((x) => `${x.qty} × ${name(x.productId)}`).join(", ") })
-      sub = t(l.saleTo, { buyer: sale.buyer === SHOPPER_ADDRESS ? l.you : shortAddress(sale.buyer) })
+      if (sale.buyer === SHOPPER_ADDRESS) sub = t(l.saleTo, { buyer: l.you })
+      else hint = t(l.saleTo, { buyer: shortAddress(sale.buyer) })
       amount = `+${money(sale.total, locale)}`
       break
     }
@@ -52,7 +54,7 @@ export function LedgerItem({ entry, demo, fresh, compact }: { entry: LedgerEntry
   }
 
   return (
-    <li className={cn("flex gap-3 rounded-md border", compact ? "p-2.5" : "p-3", tone, fresh && "bz-print")}>
+    <li title={hint} className={cn("flex gap-3 rounded-md border", compact ? "p-2.5" : "p-3", tone, fresh && "bz-print")}>
       <span className="mt-0.5 shrink-0">{icon}</span>
       <div className="min-w-0 flex-1 text-sm leading-snug">
         <p>

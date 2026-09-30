@@ -15,7 +15,7 @@ import { photos } from "@/lib/photos"
 export function HeroVisual({ locale, dict }: { locale: Locale; dict: Dictionary }) {
   const h = dict.home.hero
   return (
-    <figure className="relative mx-auto w-full max-w-xl lg:max-w-none">
+    <figure className="relative mx-auto w-full max-w-xl pb-10 lg:max-w-none">
       <div className="relative aspect-[4/3] overflow-hidden rounded-lg border shadow-crate">
         <Image
           src={photos.unstaffedStand.src}
@@ -30,7 +30,7 @@ export function HeroVisual({ locale, dict }: { locale: Locale; dict: Dictionary 
       {/* The shopper's phone */}
       <div
         aria-hidden="true"
-        className="absolute -bottom-10 left-3 w-[min(15rem,62%)] rounded-[1.4rem] border-[5px] border-foreground bg-card p-3 shadow-crate sm:left-5"
+        className="absolute bottom-0 left-3 w-[min(15rem,62%)] rounded-[1.4rem] border-[5px] border-foreground bg-card p-3 shadow-crate sm:left-5"
       >
         <div className="flex items-center gap-2">
           <LogoMark className="size-5" />
@@ -65,7 +65,6 @@ export function HeroVisual({ locale, dict }: { locale: Locale; dict: Dictionary 
           <span className="font-semibold tnum">+{money(450, locale)}</span>
         </div>
       </div>
-      <figcaption className="mt-14 text-right text-xs text-muted-foreground sm:mt-4">{h.caption}</figcaption>
     </figure>
   )
 }

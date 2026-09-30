@@ -77,16 +77,17 @@ src/
   components/
     brand/               logo mark and wordmark
     site/                header, mobile menu, footer, locale switch, theme toggle
-    home/                hero visual, two-screens preview, feature visuals
+    home/                hero visual, feature visuals
     demo/                app bar, wallet prompt, checkout, receipts, farm dashboard, shelf editor, count, QR sign…
     diagrams/            stand contract diagram
     produce/             produce icons on crate-label tints
-    ui/                  shadcn + @monark/ui registry components (re-themed)
+    ui/                  shadcn + @monark/ui registry components (re-themed), info-tip (context on demand)
   i18n/                  locale config and EN/FR dictionaries
   lib/                   demo layer, formatting, metadata, photos
   proxy.ts               / → /en or /fr from Accept-Language
 scripts/screenshots.mjs  Playwright visual check
-docs/                    site plan, assets, screenshots
+scripts/wordcount.mjs    words per page (simplification pass); dictcount.mjs: words per dictionary section
+docs/                    site plan, simplification pass, assets, screenshots
 ```
 
 UI components come from the [Monark UI registry](https://ui.monark.io) (`components.json` registers `@monark`), re-themed with Bazarius's own palette and type.

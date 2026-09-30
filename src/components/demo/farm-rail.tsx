@@ -2,7 +2,6 @@
 
 import { useState } from "react"
 
-import { t } from "@/i18n/t"
 import { getStand } from "@/lib/demo/catalog"
 import { salesToday, startOfDay } from "@/lib/demo/ops"
 import type { DemoState } from "@/lib/demo/types"
@@ -19,9 +18,8 @@ export function FarmRail({ standId, demo }: { standId: string; demo: DemoState }
   // Entries present on first render don't animate; anything newer prints in.
   const [initial] = useState(() => new Set(demo.ledger.map((e) => e.id)))
   const today = startOfDay()
-  const entries = demo.ledger.filter((e) => e.standId === standId && e.at >= today && (e.kind === "sale" || e.kind === "alert")).slice(0, 6)
+  const entries = demo.ledger.filter((e) => e.standId === standId && e.at >= today && (e.kind === "sale" || e.kind === "alert")).slice(0, 4)
   const takings = salesToday(demo, standId).reduce((n, s) => n + s.total, 0)
-  const her = stand.farmer.startsWith("Élise") || stand.farmer.startsWith("Amara")
 
   return (
     <section aria-labelledby="rail-title" className="rounded-lg border bg-card p-4">
@@ -36,7 +34,6 @@ export function FarmRail({ standId, demo }: { standId: string; demo: DemoState }
           <h2 id="rail-title" className="text-lg leading-tight">
             {r.title}
           </h2>
-          <p className="text-xs text-muted-foreground">{t(her ? r.subtitle : r.subtitleOther, { farmer: stand.farmer })}</p>
         </div>
       </div>
       <div className="mt-3 flex items-baseline justify-between rounded-md bg-muted px-3 py-2">

@@ -53,7 +53,7 @@ Supporting benefits, stated as outcomes:
 ## 3. Hero
 
 - **Headline (9 words):** "Your farm stand, open while you're in the field." / FR « Votre kiosque reste ouvert pendant que vous êtes aux champs. »
-- **Subheadline:** "Passers-by scan the sign, pay from their phone and take their basket. Bazarius updates the shelf, pays the stand and tells you when the eggs run low." / FR « Les passants scannent l'affiche, paient avec leur téléphone et repartent avec leur panier. Bazarius met la tablette à jour, encaisse pour vous et vous prévient quand il reste peu d'œufs. »
+- **Subheadline (16 words):** "Passers-by scan the sign and pay from their phone. You see every sale and every low shelf." / FR « Les passants scannent l'affiche et paient avec leur téléphone. Vous voyez chaque vente et chaque tablette qui se vide. » No eyebrow, no disclaimer line under the buttons (see `docs/simplification.md`).
 - **Primary CTA:** "Shop the demo stand" → `/{locale}/app/stand/trois-erables` (straight into the buyer flow, the fastest "aha").
 - **Secondary CTA:** "See the grower's side" → `/{locale}/app/farm`.
 - **Hero visual:** a real photo of an unstaffed roadside stand (Rein Krijgsman's "Bloemen" stand: a lone shed by a country road, fields behind, nobody there) with **live product UI** laid over it: a phone showing the shelf, and a "Meanwhile at the farm" ticket that prints each sale while the tomato count ticks down (CSS animation, paused under `prefers-reduced-motion`). Why: the photo carries the setting in one glance (no one is at this stand), the UI proves the product in the same glance (it still sells). No abstract illustration could do both.
@@ -64,9 +64,9 @@ All routes live under `/{locale}` (`en`, `fr`); `/` redirects to the visitor's p
 
 | Route | Purpose | Sections, in order |
 |-|-|-|
-| `/` | Convince in 30 seconds, then send people into the demo | Hero (photo + live UI) · "The honesty box works until it doesn't" (photo of a real cash box, three failures, the Bazarius answer) · "One stand, two screens" (buyer shelf and grower ledger rendered on the server from the demo's catalog, in the demo's visual language) · Features (six, each with a small built-in visual) · Grower band (photo of a farmer in the field + what setup takes) · Closing CTA |
-| `/how-it-works` | For growers deciding whether to trust a stand to it, and for developers/students reading the mechanics | At the stand (3 steps) · At the farm (3 steps) · What the stand contract guarantees (diagram built in SVG: basket → purchase → stock + takings, with the revert paths) · Setting up a stand (the kit) · FAQ (6) · CTA |
-| `/app` | Demo entry: "scan" a stand sign | Viewfinder with three stand signs to scan · nearby stands list · role explainer (shopper vs grower) |
+| `/` | Convince in 30 seconds, then send people into the demo | Hero (photo + live UI: the shopper's phone and the farm's ticket, i.e. both sides of one stand) · "The honesty box works until it doesn't" (photo of a real cash box, three one-line failures, one answer line) · Features (four, each with a small built-in visual: paid before it leaves, alerts, evening markdown, the count) · Grower band (photo + one line + button) · Closing CTA (heading + button) |
+| `/how-it-works` | For growers deciding whether to trust a stand to it, and for developers/students reading the mechanics | One-line intro · At the stand (3 steps) · At the farm (3 steps) · What the stand contract guarantees (the diagram: basket → purchase → stock + takings + receipt, with the revert and owner-only paths) · Setting up a stand (the kit) · FAQ (5) · CTA |
+| `/app` | Demo entry: "scan" a stand sign | Viewfinder with three stand signs to scan · nearby stands list |
 | `/app/stand/[standId]` | Buyer flow: shelf, basket, pay, receipt | Stand header (farm, place, stand clock, markdown hour) · stamp card · shelf · basket bar/sheet · checkout panel · receipt · "Meanwhile at the farm" panel (desktop side rail) |
 | `/app/receipts` | Buyer's receipts and stamp cards | Stamp cards per stand · receipt list · receipt detail with verification |
 | `/app/farm` | Grower dashboard (owner wallet only) | Today at the stand (takings, sales, items sold) · alerts · live ledger · shelf editor (price, stock, limit, markdown, on/off) · stand sign (a real, scannable QR) · withdraw takings |
@@ -77,7 +77,7 @@ All routes live under `/{locale}` (`en`, `fr`); `/` redirects to the visitor's p
 
 Why each extra page exists: `/how-it-works` answers the grower's trust questions (what if someone takes more than they paid for? what if there's no signal?) that would bloat the home page; `/credits` is required by the asset rules; the `/app/*` sub-routes keep each flow linkable and each screenshot reproducible.
 
-**Header:** Bazarius wordmark (home) · "How it works" · "Demo" (text links, active pill) · EN/FR switch · theme toggle · primary button "Open the stand" (→ `/app`). Inside `/app`, the header keeps the same shell and the app adds its own strip: role tabs (Shopper / Grower), wallet button, "Demo · simulated data" badge, demo controls.
+**Header:** Bazarius wordmark (home) · "How it works" · "Demo" (text links, active pill) · EN/FR switch · theme toggle · primary button "Open the stand" (→ `/app`). It is the only top bar on marketing pages. Inside `/app`, the app adds **one** compact bar: role switch (Shopper / Grower, icon-only on phones) and that side's pages (Stands · Receipts, or Today · Close the day, "Count" on phones) on the left; a network pill ("● Base Sepolia", icon-only on phones) that opens the demo controls, and the wallet button, on the right. No demo badge in the bar: "Demo · simulated data" lives in the footer.
 **Mobile:** wordmark + menu button opening a full-height sheet with the links, switches and action.
 **Footer:** one-line description · links (How it works, Demo, Receipts, Credits) · project page on monark.io · GitHub repo · "Demo · simulated data" · "Built with Monark" credit (mono mark, muted, 12–13px).
 
@@ -85,7 +85,7 @@ Why each extra page exists: `/how-it-works` answers the grower's trust questions
 
 | Feature | User benefit | Where on the site | Demo flow that proves it |
 |-|-|-|-|
-| **A shelf that counts itself** | Stock drops the moment a basket is paid; no end-of-day guessing | Hero ticker; home "two screens"; `/app/stand/*` tallies | Flow 1: buy, watch the tally and the farm ledger change |
+| **A shelf that counts itself** | Stock drops the moment a basket is paid; no end-of-day guessing | Hero ticker; `/app/stand/*` tallies | Flow 1: buy, watch the tally and the farm ledger change |
 | **Paid before it leaves** (atomic purchase with oversell guard) | No IOUs; a buyer can't pay for the last garlic braid someone else just took | Home features; how-it-works diagram | Flow 1: "Another shopper buys first" makes the purchase revert and the basket fix itself |
 | **Low-stock alerts** | Restock before the drive, not after | Home features; farm dashboard alerts | Flow 1 → Flow 3: a purchase trips the eggs alert, the grower restocks |
 | **Evening markdown** | Perishables sell instead of wilting | Home features; stand clock on the shelf | Flow 3: set −30% on greens; jump the stand clock past 17:00 and the tags change |
@@ -138,60 +138,55 @@ Tone: plain, warm, practical, the way a grower talks at the market: short senten
 
 | Section | EN | FR |
 |-|-|-|
-| Eyebrow | Self-serve farm stands | Kiosques fermiers libre-service |
 | H1 | Your farm stand, open while you're in the field. | Votre kiosque reste ouvert pendant que vous êtes aux champs. |
-| Sub | Passers-by scan the sign, pay from their phone and take their basket. Bazarius updates the shelf, pays the stand and tells you when the eggs run low. | Les passants scannent l'affiche, paient avec leur téléphone et repartent avec leur panier. Bazarius met la tablette à jour, encaisse pour vous et vous prévient quand il reste peu d'œufs. |
+| Sub | Passers-by scan the sign and pay from their phone. You see every sale and every low shelf. | Les passants scannent l'affiche et paient avec leur téléphone. Vous voyez chaque vente et chaque tablette qui se vide. |
 | CTAs | Shop the demo stand · See the grower's side | Magasiner au kiosque démo · Voir le côté producteur |
 | Hero ticket | Meanwhile at the farm · Sold: 1 basket of tomatoes · 4.50 tUSDC | Pendant ce temps, à la ferme · Vendu : 1 panier de tomates · 4,50 tUSDC |
 | Problem H2 | The honesty box works until it doesn't. | La boîte à l'honneur, ça marche… jusqu'au jour où. |
-| Problem body | Most roadside stands run on trust and a cash tin. It's charming, and it leaks. | La plupart des kiosques de bord de route fonctionnent à la confiance, avec une boîte de conserve. C'est sympathique, mais ça fuit. |
-| Problem 1 | **Nobody carries cash anymore.** Half your passers-by drive off empty-handed. | **Plus personne n'a de monnaie.** La moitié des passants repartent les mains vides. |
-| Problem 2 | **You can't tell what sold from what walked.** The tin says $40; the shelf says $70 is gone. | **Impossible de distinguer le vendu du disparu.** La boîte dit 40 $, la tablette dit 70 $. |
-| Problem 3 | **You restock blind.** You find out the eggs ran out at noon when you drive by at six. | **Vous regarnissez à l'aveugle.** Vous apprenez à 18 h que les œufs sont partis à midi. |
-| Answer | Bazarius keeps the trust and fixes the leaks: every basket is paid on the spot, the shelf counts itself, and your phone knows before you do. | Bazarius garde la confiance et bouche les fuites : chaque panier est payé sur place, la tablette se compte toute seule, et votre téléphone le sait avant vous. |
-| Two screens H2 | One stand, two screens. | Un kiosque, deux écrans. |
-| Two screens body | The passer-by sees a shelf and a pay button. You see every sale land, stock drop and alert fire, from wherever you are. | Le passant voit une tablette et un bouton pour payer. Vous voyez chaque vente arriver, le stock baisser et les alertes partir, où que vous soyez. |
-| Labels | At the stand · At the farm | Au kiosque · À la ferme |
+| Problem 1 | **Nobody carries cash anymore.** Passers-by drive off empty-handed. | **Plus personne n'a de monnaie.** Les passants repartent les mains vides. |
+| Problem 2 | **You can't tell sold from taken.** The tin says $40; $70 is gone. | **Vendu ou disparu? Impossible à dire.** La boîte dit 40 $; il manque 70 $. |
+| Problem 3 | **You restock blind.** The eggs ran out at noon. | **Vous regarnissez à l'aveugle.** Les œufs sont partis à midi. |
+| Answer | Bazarius keeps the trust and fixes the leaks. | Bazarius garde la confiance et bouche les fuites. |
 | Features H2 | Everything a stand needs, nothing it doesn't. | Tout ce qu'il faut à un kiosque, rien de plus. |
-| F1 | **A shelf that counts itself.** Stock drops the second a basket is paid. No tallies on the back of an envelope. | **Une tablette qui se compte toute seule.** Le stock baisse dès qu'un panier est payé. Fini les comptes au dos d'une enveloppe. |
-| F2 | **Paid before it leaves.** Payment and stock update happen in one step. If someone grabs the last braid first, the second payment simply doesn't go through. | **Payé avant de partir.** Le paiement et la mise à jour du stock se font d'un seul coup. Si quelqu'un prend la dernière tresse d'ail avant vous, le second paiement ne passe tout simplement pas. |
-| F3 | **Alerts before the drive.** Pick a threshold per product. When eggs hit it, you hear about it. | **L'alerte avant le détour.** Un seuil par produit. Quand les œufs l'atteignent, vous le savez. |
-| F4 | **Evening markdown.** Greens drop 30% after five, on their own. Sell the last bunch instead of composting it. | **Rabais de fin de journée.** La laitue baisse de 30 % après 17 h, toute seule. Le dernier sac se vend au lieu de finir au compost. |
-| F5 | **A count that tells the truth.** Count the shelf at night; Bazarius shows what left without being paid for. | **Un décompte qui dit vrai.** Comptez la tablette le soir ; Bazarius montre ce qui est parti sans être payé. |
-| F6 | **A stamp card that lives in the phone.** Six visits, three dollars off. Regulars notice. | **Une carte à tampons dans le téléphone.** Six passages, trois dollars de rabais. Les habitués le remarquent. |
-| Grower H2 | Built for stands nobody has time to staff. | Pensé pour les kiosques que personne n'a le temps de tenir. |
-| Grower body | Print the sign, list what's on the shelf, go back to work. Setup takes about fifteen minutes and a phone; there's no terminal to charge and no till to empty. | Imprimez l'affiche, inscrivez ce qu'il y a sur la tablette, retournez travailler. Il faut une quinzaine de minutes et un téléphone ; pas de terminal à recharger ni de caisse à vider. |
-| Grower points | QR sign you print yourself · Works with any phone that has a wallet · Takings go straight to your farm wallet | Affiche QR à imprimer soi-même · Fonctionne avec tout téléphone muni d'un portefeuille · Les recettes vont directement dans le portefeuille de la ferme |
+| F1 | **Paid before it leaves.** Someone took the last braid first? Nothing is charged. | **Payé avant de partir.** Quelqu'un a pris la dernière tresse avant vous? Rien n'est débité. |
+| F2 | **Alerts before the drive.** Eggs hit their threshold, your phone knows. | **L'alerte avant le détour.** Les œufs atteignent leur seuil, votre téléphone le sait. |
+| F3 | **Evening markdown.** Greens drop 30% after five, on their own. | **Rabais de fin de journée.** Le mesclun baisse de 30 % après 17 h, tout seul. |
+| F4 | **A count that tells the truth.** The evening count shows what left unpaid. | **Un décompte qui dit vrai.** Le décompte du soir montre ce qui est parti sans être payé. |
+| Grower | **Built for stands nobody has time to staff.** Print the sign, list the shelf, go back to work. | **Pensé pour les kiosques que personne n'a le temps de tenir.** Imprimez l'affiche, inscrivez la tablette, retournez travailler. |
 | Closing | The stand's open. Take a look around. / Open the demo stand | Le kiosque est ouvert. Faites un tour. / Ouvrir le kiosque démo |
+
+The shelf that counts itself is shown by the hero (the tally rolls from 14 to 13 as the farm ticket prints); the stamp card lives in the demo (stand page and receipts), not on the home page.
 
 ### How it works
 
 | Section | EN | FR |
 |-|-|-|
 | H1 | How a Bazarius stand works | Comment fonctionne un kiosque Bazarius |
-| Intro | Two people use a stand: the passer-by who buys and the grower who stocks it. The stand contract sits between them and keeps both honest. | Deux personnes utilisent un kiosque : le passant qui achète et le producteur qui le garnit. Le contrat du kiosque se place entre les deux et garde tout le monde honnête. |
-| At the stand | 1. **Scan the sign.** The QR code opens the stand's shelf in the browser. No app to install. 2. **Fill a basket and pay.** Prices come from the shelf. One confirmation in the wallet pays the stand. 3. **Take it and go.** The receipt is on the phone, and the shelf already shows one fewer. | 1. **Scannez l'affiche.** Le code QR ouvre la tablette du kiosque dans le navigateur. Aucune appli à installer. 2. **Remplissez le panier et payez.** Les prix viennent de la tablette. Une confirmation dans le portefeuille, et le kiosque est payé. 3. **Servez-vous et partez.** Le reçu est dans le téléphone, et la tablette affiche déjà un article de moins. |
-| At the farm | 1. **Stock the shelf.** Prices, quantities, limits and markdowns, published in one update. 2. **Get on with the day.** Sales arrive live; an alert tells you when something runs low. 3. **Close the day.** Count what's left, see what went unpaid, withdraw the takings. | 1. **Garnissez la tablette.** Prix, quantités, limites et rabais, publiés en une seule mise à jour. 2. **Vaquez à vos occupations.** Les ventes arrivent en direct ; une alerte vous prévient quand un produit s'épuise. 3. **Fermez la journée.** Comptez ce qui reste, voyez ce qui n'a pas été payé, retirez les recettes. |
-| Contract H2 | What the stand contract guarantees | Ce que garantit le contrat du kiosque |
-| Guarantees | Payment and stock change together, or not at all. · You can't buy more than is on the shelf. · Only the stand owner's wallet can change prices or withdraw. · Every sale leaves a receipt anyone can check. | Le paiement et le stock changent ensemble, ou pas du tout. · On ne peut pas acheter plus que ce qu'il y a sur la tablette. · Seul le portefeuille du propriétaire peut changer les prix ou retirer l'argent. · Chaque vente laisse un reçu vérifiable par tous. |
+| Intro | A passer-by, a grower, and one contract between them. | Un passant, un producteur, et un contrat entre les deux. |
+| At the stand | 1. **Scan the sign.** The shelf opens. No app to install. 2. **Fill a basket and pay.** One confirmation in the wallet. 3. **Take it and go.** The receipt stays on the phone. | 1. **Scannez l'affiche.** La tablette s'ouvre. Aucune appli à installer. 2. **Remplissez le panier et payez.** Une confirmation dans le portefeuille. 3. **Servez-vous et partez.** Le reçu reste dans le téléphone. |
+| At the farm | 1. **Stock the shelf.** Prices, stock and markdowns in one update. 2. **Get on with the day.** Sales arrive live; alerts flag low stock. 3. **Close the day.** Count, see what went unpaid, withdraw. | 1. **Garnissez la tablette.** Prix, stock et rabais en une mise à jour. 2. **Vaquez à vos occupations.** Les ventes arrivent en direct; les alertes signalent ce qui baisse. 3. **Fermez la journée.** Comptez, voyez ce qui manque, retirez. |
+| Contract H2 | What the stand contract guarantees (carried by the diagram alone: payment and stock move together or nothing moves; owner wallet only for prices, count, withdraw; every sale leaves a receipt) | Ce que garantit le contrat du kiosque |
 | Kit H2 | Setting up a stand | Monter un kiosque |
-| Kit | A printed QR sign (weatherproof sleeve recommended) · Your shelf, entered once from your phone · A farm wallet for the takings · Optional: a small scale for items sold by weight | Une affiche QR imprimée (pochette étanche conseillée) · Votre tablette, saisie une fois depuis le téléphone · Un portefeuille pour la ferme · Facultatif : une petite balance pour les produits au poids |
+| Kit | A printed QR sign · Your shelf, entered from your phone · A farm wallet · Later: a scale, to sell by weight | Une affiche QR imprimée · Votre tablette, saisie depuis le téléphone · Un portefeuille pour la ferme · Plus tard : une balance, pour vendre au poids |
 
 **FAQ (EN / FR)**
 
-1. *What stops someone from taking more than they paid for?* Nothing physical, same as today. The difference is that you'll know: the evening count shows exactly what left unpaid, per product, so you can decide whether to move the stand, add a camera or shrug. / *Qu'est-ce qui empêche quelqu'un de prendre plus que ce qu'il a payé ?* Rien de physique, comme aujourd'hui. La différence, c'est que vous le saurez : le décompte du soir montre exactement ce qui est parti sans être payé, produit par produit. À vous de voir s'il faut déplacer le kiosque, ajouter une caméra ou laisser aller.
-2. *What if two people buy the last dozen at the same time?* The first payment to reach the network wins. The second one doesn't go through, nobody is charged, and their basket updates to what's left. / *Et si deux personnes achètent la dernière douzaine en même temps ?* Le premier paiement arrivé sur le réseau l'emporte. Le second ne passe pas, personne n'est facturé et le panier s'ajuste à ce qui reste.
-3. *Do buyers need crypto?* They need a wallet with a digital dollar in it. In this demo it's tUSDC on a test network, and a top-up button gives you some. / *Les acheteurs ont-ils besoin de cryptomonnaie ?* Il leur faut un portefeuille avec des dollars numériques. Dans cette démo, c'est du tUSDC sur un réseau de test, et un bouton permet d'en obtenir.
-4. *What about bad cell coverage?* The shelf page is tiny and loads on one bar of signal. Paying needs a connection for a few seconds; a stand with no signal at all isn't a fit yet. / *Et si le réseau cellulaire est faible ?* La page de la tablette est très légère et se charge avec une seule barre. Le paiement demande quelques secondes de connexion ; un kiosque sans aucun signal n'est pas encore un bon candidat.
-5. *Who holds the money?* The stand contract holds the day's takings until you withdraw them to your farm wallet. Bazarius never holds your funds. / *Qui garde l'argent ?* Le contrat du kiosque conserve les recettes du jour jusqu'à ce que vous les retiriez vers le portefeuille de la ferme. Bazarius ne détient jamais vos fonds.
-6. *Can I sell by weight?* Yes: list the item per pound or kilo and leave a scale at the stand. Buyers enter the weight; the count at night keeps everyone honest. (In this demo, items are sold by unit or basket.) / *Puis-je vendre au poids ?* Oui : inscrivez le produit à la livre ou au kilo et laissez une balance au kiosque. L'acheteur entre le poids ; le décompte du soir garde tout le monde honnête. (Dans cette démo, on vend à l'unité ou au panier.)
+Five questions, answers of 12–18 words (the only FAQ on the site; "Can I sell by weight?" became the last kit line).
+
+1. *What stops someone from taking more than they paid for?* Nothing physical, same as today. But the evening count shows exactly what left unpaid, per product.
+2. *What if two people buy the last dozen at once?* The first payment wins. The second doesn't go through, and nobody is charged.
+3. *Do buyers need crypto?* A wallet with digital dollars. In this demo, test tUSDC you can top up.
+4. *What about bad cell coverage?* The shelf loads on one bar. A stand with no signal at all isn't a fit yet.
+5. *Who holds the money?* The stand contract, until you withdraw to your farm wallet. Never Bazarius.
+
+French answers are in `src/i18n/dictionaries/fr.ts`, written to the same length.
 
 ### Demo app (key strings)
 
 | Key | EN | FR |
 |-|-|-|
 | Scan H1 | Scan a stand sign | Scannez l'affiche d'un kiosque |
-| Scan hint | Point your camera at the sign, or tap one below. (This demo pretends the camera found it.) | Visez l'affiche avec votre caméra, ou touchez-en une ci-dessous. (Dans cette démo, on fait semblant que la caméra l'a trouvée.) |
+| Scan hint | Tap a sign to scan it (inside the viewfinder) | Touchez une affiche pour la scanner |
 | Scanning | Reading the sign… | Lecture de l'affiche… |
 | Role tabs | Shopper · Grower | Client · Producteur |
 | Connect | Connect demo wallet | Connecter le portefeuille démo |
@@ -203,7 +198,7 @@ Tone: plain, warm, practical, the way a grower talks at the market: short senten
 | Rejected | You declined the payment. Nothing was charged. | Vous avez refusé le paiement. Rien n'a été débité. |
 | Reverted | The network rejected the payment. Nothing was charged. | Le réseau a refusé le paiement. Rien n'a été débité. |
 | Stock changed | Someone just bought the last one. Your basket now matches what's left. | Quelqu'un vient de prendre le dernier. Votre panier correspond maintenant à ce qui reste. |
-| Insufficient | Your wallet has {balance}. Top up with test tUSDC to continue. | Votre portefeuille contient {balance}. Ajoutez des tUSDC de test pour continuer. |
+| Insufficient | Your wallet has {balance}. + button "Get 25.00 test tUSDC" | Votre portefeuille contient {balance}. + « Obtenir 25,00 tUSDC de test » |
 | Receipt | Paid. Take your basket, and thanks for stopping. | Payé. Servez-vous, et merci d'être passé. |
 | Stamp full | Card full! 3.00 tUSDC off your next basket here. | Carte pleine ! 3,00 tUSDC de rabais sur votre prochain panier ici. |
 | Not owner | This wallet doesn't own a stand. | Ce portefeuille ne possède aucun kiosque. |
@@ -212,14 +207,16 @@ Tone: plain, warm, practical, the way a grower talks at the market: short senten
 | Publish failed | The update didn't go through. Your changes are still here. | La mise à jour n'est pas passée. Vos modifications sont toujours là. |
 | Unaccounted | {n} unaccounted (≈ {amount}) | {n} manquant(s) (≈ {amount}) |
 | Withdraw done | {amount} is in your farm wallet. | {amount} est dans le portefeuille de la ferme. |
-| Empty basket | Your basket is empty. Tap + on anything that looks good. | Votre panier est vide. Touchez + sur ce qui vous fait envie. |
-| Empty receipts | No receipts yet. Your first basket will show up here. | Aucun reçu pour l'instant. Votre premier panier apparaîtra ici. |
-| Empty ledger | No sales yet today. The first one will print here. | Aucune vente aujourd'hui. La première s'imprimera ici. |
-| Nothing to withdraw | Nothing to withdraw. Takings appear here as the stand sells. | Rien à retirer. Les recettes s'accumulent ici au fil des ventes. |
-| Storage off | Your browser isn't saving the demo, so it will reset when you leave. | Votre navigateur n'enregistre pas la démo : elle repartira à zéro à votre départ. |
+| Empty basket | Your basket is empty. | Votre panier est vide. |
+| Empty receipts | No receipts yet. + "Find a stand" | Aucun reçu pour l'instant. + « Trouver un kiosque » |
+| Empty ledger | No sales yet today. | Aucune vente aujourd'hui. |
+| Nothing to withdraw | Nothing to withdraw yet. | Rien à retirer pour l'instant. |
+| Storage off | This browser won't save the demo. | Ce navigateur n'enregistre pas la démo. |
 | Error page | Something broke at the stand. / Try again | Quelque chose a flanché au kiosque. / Réessayer |
 | 404 | This row is empty. / The page you're looking for isn't on this stand. | Cette rangée est vide. / La page que vous cherchez n'est pas sur ce kiosque. |
-| Disclaimer | Demo · simulated data · Testnet demo · not financial advice · no real funds | Démo · données simulées · Démo sur réseau de test · pas un conseil financier · aucun fonds réel |
+| Disclaimer | "Demo · simulated data" in the footer only; "Testnet demo · not financial advice · no real funds" only in the wallet prompt of a transaction that moves funds | « Démo · données simulées » (pied de page) ; « Démo sur réseau de test · pas un conseil financier · aucun fonds réel » (invite du portefeuille seulement) |
+
+**Context on demand in the app** (info icons with popovers that open on tap): the stamp card rule ("One stamp per purchase of 5.00 tUSDC or more. Six stamps: 3.00 tUSDC off."), how shelf updates and the markdown hour work (next to "Shelf"), how the evening count works (next to "Close the day"). No intro paragraphs above the scan, receipts, dashboard or count screens. The per-basket limit shows once a product is in the basket. Ledgers show 4 lines (farm rail) or 5 lines + "Show more" (dashboard); another buyer's address is a tooltip on the sale line.
 
 ## 8. Aesthetics (independent identity)
 
@@ -303,7 +300,7 @@ Scale (rem, mobile → desktop): display 2.5 → 4.25 (Zilla 700, −0.02em), h2
 
 All free Unsplash License, listed with URLs and photographers in `docs/assets.md` and credited on `/credits`.
 
-Built in code: logo and favicon (SVG); hero phone + farm ticket (live UI); "two screens" preview (real components, seed data); stand contract diagram (SVG); feature mini-visuals (tally, tag with markdown, alert chip, count variance, stamp card); stand QR sign (real QR via `uqr`); Open Graph image per locale (`next/og`). Icons: Lucide (produce: `Egg`, `Carrot`, `Apple`, `Wheat`, `Salad`, `Cherry`, `Flower2`, `Droplet`, `Leaf`, `Bean`, `Citrus`, `Milk`).
+Built in code: logo and favicon (SVG); hero phone + farm ticket (live UI); stand contract diagram (SVG); feature mini-visuals (paid/reverted, alert chip, tag with markdown, count variance); stand QR sign (real QR via `uqr`); Open Graph image per locale (`next/og`). Icons: Lucide (produce: `Egg`, `Carrot`, `Apple`, `Wheat`, `Salad`, `Cherry`, `Flower2`, `Droplet`, `Leaf`, `Bean`, `Citrus`, `Milk`).
 
 ## 10. Pricing strategy
 
@@ -340,3 +337,4 @@ Reasoning: growers compare against card terminals (roughly 2.6–2.9% plus hardw
 - **Layout on phones:** the basket is a bottom bar that opens a sheet (checkout and receipt live there); the farm rail sits under the shelf; on the grower dashboard alerts come before the shelf editor.
 - **Units** read as "per dozen / par douzaine"; single items are "per item / par unité".
 - **Header:** as an independent brand, Bazarius keeps its own header (wordmark, two links, EN/FR, theme, "Open the stand"); the Monark standard header does not apply.
+- **Simplification pass** (owner feedback, brand guidelines §8 "Restraint"): about 42% fewer visible words; one app bar instead of two stacked rows; no eyebrows or intro paragraphs; "One stand, two screens" folded into the hero. Details and before/after counts in `docs/simplification.md`.

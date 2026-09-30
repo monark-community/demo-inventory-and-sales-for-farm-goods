@@ -38,11 +38,10 @@ export function OwnerGate({ children }: { children: ReactNode }) {
     <div className="container-page flex flex-1 items-start justify-center py-12 sm:py-20">
       <section className="w-full max-w-lg rounded-lg border bg-card p-6 shadow-crate-sm sm:p-8" aria-labelledby="gate-title">
         <LockKeyhole className="size-8 text-primary" aria-hidden="true" />
-        <p className="eyebrow mt-4 text-primary">{f.eyebrow}</p>
-        <h1 id="gate-title" className="mt-2 text-2xl sm:text-3xl">
+        <h1 id="gate-title" className="mt-4 text-2xl sm:text-3xl">
           {notOwner ? f.notOwnerTitle : f.gateTitle}
         </h1>
-        <p className="mt-3 text-muted-foreground">{notOwner ? f.notOwnerBody : f.gateBody}</p>
+        {!notOwner && <p className="mt-3 text-muted-foreground">{f.gateBody}</p>}
         {notOwner ? (
           <Button size="lg" className="mt-6 w-full sm:w-auto" onClick={() => switchAccount("farmer")}>
             <ArrowLeftRight aria-hidden="true" />

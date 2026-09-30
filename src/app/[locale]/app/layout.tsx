@@ -15,7 +15,6 @@ export default async function AppLayout({ children, params }: LayoutProps<"/[loc
         locale,
         app: dict.app,
         valueNotice: dict.common.valueNotice,
-        demoBadge: dict.common.demoBadge,
         close: dict.common.close,
       }}
     >

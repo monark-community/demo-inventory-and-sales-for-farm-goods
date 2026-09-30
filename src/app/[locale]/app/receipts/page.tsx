@@ -9,7 +9,7 @@ export async function generateMetadata({ params }: PageProps<"/[locale]/app/rece
   const { locale } = await params
   if (!isLocale(locale)) return {}
   const d = getDictionary(locale).app.receipts
-  return pageMetadata(locale, "/app/receipts", d.title, d.body)
+  return pageMetadata(locale, "/app/receipts", d.title, d.metaDescription)
 }
 
 export default async function ReceiptsPage({ params }: PageProps<"/[locale]/app/receipts">) {

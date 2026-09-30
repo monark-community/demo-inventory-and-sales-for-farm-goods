@@ -21,7 +21,7 @@ All photos are from Unsplash under the free [Unsplash License](https://unsplash.
 
 ## Built in code
 
-- Hero overlay (phone shelf, rolling tally, printing farm ticket), "One stand, two screens" preview, feature mini-visuals, stamp cards, receipts with torn edges and PAID stamp.
+- Hero overlay (phone shelf, rolling tally, printing farm ticket), feature mini-visuals, stamp cards, receipts with torn edges and PAID stamp.
 - Stand contract diagram (`src/components/diagrams/contract-diagram.tsx`), flat SVG line work in theme colours.
 - Produce icons: [Lucide](https://lucide.dev) plus four drawn in the same style (tomato, garlic, pumpkin, jar) in `src/components/produce/produce-icon.tsx`.
 - Stand QR codes: real, scannable, generated with [uqr](https://github.com/unjs/uqr).

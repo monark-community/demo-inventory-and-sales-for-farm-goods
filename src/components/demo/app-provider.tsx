@@ -15,7 +15,6 @@ export interface AppCopy {
   locale: Locale
   app: Dictionary["app"]
   valueNotice: string
-  demoBadge: string
   close: string
 }
 

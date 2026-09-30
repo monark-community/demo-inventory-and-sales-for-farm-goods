@@ -6,6 +6,7 @@ import { useState } from "react"
 
 import { ProduceBadge } from "@/components/produce/produce-icon"
 import { Button } from "@/components/ui/button"
+import { InfoTip } from "@/components/ui/info-tip"
 import { Input } from "@/components/ui/input"
 import { href } from "@/i18n/config"
 import { t } from "@/i18n/t"
@@ -92,9 +93,10 @@ function Count() {
         <ArrowLeft className="size-4" aria-hidden="true" />
         {c.back}
       </Link>
-      <p className="eyebrow mt-3 text-primary">{c.eyebrow}</p>
-      <h1 className="mt-2 text-3xl sm:text-4xl">{c.title}</h1>
-      <p className="mt-2 max-w-2xl text-muted-foreground">{c.body}</p>
+      <h1 className="mt-3 flex items-center gap-1 text-3xl sm:text-4xl">
+        {c.title}
+        <InfoTip label={c.infoLabel}>{c.info}</InfoTip>
+      </h1>
 
       <div className="mt-8 grid gap-8 lg:grid-cols-[1fr_22rem] xl:grid-cols-[1fr_24rem]">
         <section aria-labelledby="count-title" className="min-w-0 rounded-lg border bg-card">
@@ -188,7 +190,6 @@ function Count() {
               <Landmark className="size-5 text-success" aria-hidden="true" />
               {c.withdrawTitle}
             </h2>
-            <p className="mt-1 text-sm text-muted-foreground">{c.withdrawBody}</p>
             <p key={takings} className="bz-roll mt-3 font-display text-3xl font-bold tnum">
               {tusdc(takings, locale)}
             </p>

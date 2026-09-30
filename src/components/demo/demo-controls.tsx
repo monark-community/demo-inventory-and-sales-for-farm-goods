@@ -50,9 +50,16 @@ export function DemoControls() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline" size="icon" aria-label={c.open} title={c.open}>
-          <SlidersHorizontal className="size-4" aria-hidden="true" />
-        </Button>
+        <button
+          type="button"
+          aria-label={`${app.networkShort}, ${c.open}`}
+          title={app.network}
+          className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-full border border-input bg-card px-2.5 text-xs font-semibold outline-none hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring"
+        >
+          <span aria-hidden="true" className="hidden size-2 rounded-full bg-chart-5 sm:block" />
+          <span className="hidden sm:inline">{app.networkShort}</span>
+          <SlidersHorizontal className="size-4 text-muted-foreground" aria-hidden="true" />
+        </button>
       </DialogTrigger>
       <DialogContent closeLabel={close}>
         <DialogHeader>

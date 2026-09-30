@@ -1,11 +1,10 @@
-import { ArrowRight, Check } from "lucide-react"
+import { ArrowRight } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 
 import { FeatureVisual } from "@/components/home/feature-visuals"
 import { HeroVisual } from "@/components/home/hero-visual"
-import { TwoScreens } from "@/components/home/two-screens"
 import { Button } from "@/components/ui/button"
 import { href, isLocale } from "@/i18n/config"
 import { getDictionary } from "@/i18n"
@@ -30,8 +29,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
       {/* Hero */}
       <section className="container-page grid items-center gap-12 pt-10 pb-20 md:pt-16 lg:grid-cols-[1fr_1.05fr] lg:gap-14 lg:pb-24">
         <div>
-          <p className="eyebrow text-primary">{h.eyebrow}</p>
-          <h1 className="mt-4 text-[2.5rem] sm:text-5xl lg:text-[4rem]">{h.title}</h1>
+          <h1 className="text-[2.5rem] sm:text-5xl lg:text-[4rem]">{h.title}</h1>
           <p className="mt-6 max-w-xl text-lg text-muted-foreground">{h.subtitle}</p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Button asChild size="lg">
@@ -44,7 +42,6 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
               <Link href={href(locale, "/app/farm")}>{h.ctaSecondary}</Link>
             </Button>
           </div>
-          <p className="mt-5 text-xs text-muted-foreground">{dict.common.valueNotice}</p>
         </div>
         <HeroVisual locale={locale} dict={dict} />
       </section>
@@ -56,9 +53,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
             <Image src={photos.honestyBox.src} alt={h.problem.imageAlt} fill sizes="(min-width: 768px) 40vw, 100vw" className="object-cover" />
           </div>
           <div>
-            <p className="eyebrow text-primary">{h.problem.eyebrow}</p>
-            <h2 className="mt-3 text-3xl sm:text-4xl lg:text-[2.75rem]">{h.problem.title}</h2>
-            <p className="mt-4 text-lg text-muted-foreground">{h.problem.body}</p>
+            <h2 className="text-3xl sm:text-4xl lg:text-[2.75rem]">{h.problem.title}</h2>
             <ol className="mt-8 space-y-5">
               {h.problem.points.map((pt, i) => (
                 <li key={pt.title} className="flex gap-4">
@@ -76,35 +71,16 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
         </div>
       </section>
 
-      {/* One stand, two screens */}
-      <section className="container-page py-16 md:py-24">
-        <div className="max-w-2xl">
-          <p className="eyebrow text-primary">{h.screens.eyebrow}</p>
-          <h2 className="mt-3 text-3xl sm:text-4xl lg:text-[2.75rem]">{h.screens.title}</h2>
-          <p className="mt-4 text-lg text-muted-foreground">{h.screens.body}</p>
-        </div>
-        <div className="mt-10">
-          <TwoScreens locale={locale} dict={dict} />
-        </div>
-        <Button asChild variant="outline" size="lg" className="mt-8">
-          <Link href={href(locale, "/app")}>
-            {h.screens.cta}
-            <ArrowRight aria-hidden="true" />
-          </Link>
-        </Button>
-      </section>
-
       {/* Features */}
       <section className="border-y bg-card">
         <div className="container-page py-16 md:py-24">
           <div className="max-w-2xl">
-            <p className="eyebrow text-primary">{h.features.eyebrow}</p>
-            <h2 className="mt-3 text-3xl sm:text-4xl lg:text-[2.75rem]">{h.features.title}</h2>
+            <h2 className="text-3xl sm:text-4xl lg:text-[2.75rem]">{h.features.title}</h2>
           </div>
-          <ul className="mt-10 grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
-            {h.features.items.map((item, i) => (
+          <ul className="mt-10 grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+            {h.features.items.map((item) => (
               <li key={item.title}>
-                <FeatureVisual index={i} locale={locale} v={h.features.visual} />
+                <FeatureVisual kind={item.visual} locale={locale} v={h.features.visual} />
                 <h3 className="mt-4 text-xl">{item.title}</h3>
                 <p className="mt-2 text-muted-foreground">{item.body}</p>
               </li>
@@ -121,17 +97,8 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
           </div>
         </div>
         <div>
-          <p className="eyebrow text-primary">{h.grower.eyebrow}</p>
-          <h2 className="mt-3 text-3xl sm:text-4xl lg:text-[2.75rem]">{h.grower.title}</h2>
+          <h2 className="text-3xl sm:text-4xl lg:text-[2.75rem]">{h.grower.title}</h2>
           <p className="mt-4 text-lg text-muted-foreground">{h.grower.body}</p>
-          <ul className="mt-6 space-y-3">
-            {h.grower.points.map((pt) => (
-              <li key={pt} className="flex gap-3">
-                <Check className="mt-1 size-5 shrink-0 text-success" aria-hidden="true" />
-                <span>{pt}</span>
-              </li>
-            ))}
-          </ul>
           <Button asChild size="lg" variant="outline" className="mt-8">
             <Link href={href(locale, "/app/farm")}>{h.grower.cta}</Link>
           </Button>
@@ -141,10 +108,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
       {/* Closing */}
       <section className="bg-primary text-primary-foreground">
         <div className="container-page flex flex-col items-start gap-6 py-16 md:flex-row md:items-center md:justify-between md:py-20">
-          <div className="max-w-2xl">
-            <h2 className="text-3xl sm:text-4xl">{h.closing.title}</h2>
-            <p className="mt-3 text-lg opacity-90">{h.closing.body}</p>
-          </div>
+          <h2 className="max-w-2xl text-3xl sm:text-4xl">{h.closing.title}</h2>
           <Button asChild size="lg" variant="accent" className="shrink-0">
             <Link href={href(locale, "/app")}>
               {h.closing.cta}

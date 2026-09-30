@@ -9,7 +9,7 @@ export async function generateMetadata({ params }: PageProps<"/[locale]/app/farm
   const { locale } = await params
   if (!isLocale(locale)) return {}
   const d = getDictionary(locale).app.count
-  return pageMetadata(locale, "/app/farm/count", d.title, d.body)
+  return pageMetadata(locale, "/app/farm/count", d.title, d.info)
 }
 
 export default async function CountPage({ params }: PageProps<"/[locale]/app/farm/count">) {

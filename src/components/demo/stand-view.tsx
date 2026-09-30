@@ -94,7 +94,6 @@ export function StandView({ standId }: { standId: string }) {
         <div>
           <p className="eyebrow text-primary">{t(s.by, { farmer: stand.farmer })}</p>
           <h1 className="mt-1.5 text-3xl sm:text-4xl">{stand.name}</h1>
-          <p className="mt-2 max-w-2xl text-muted-foreground">{stand.blurb[locale]}</p>
           <p className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-sm">
             <span className="inline-flex items-center gap-1.5 text-muted-foreground">
               <MapPin className="size-4" aria-hidden="true" />
