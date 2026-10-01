@@ -1,0 +1,99 @@
+"use client"
+
+import * as React from "react"
+
+import { cn } from "@/lib/utils"
+
+function formatBaseUnits(
+  value: bigint | string | number,
+  decimals: number,
+  maxFractionDigits: number,
+  locale?: string
+) {
+  const raw = typeof value === "bigint" ? value : BigInt(value)
+  // Bazarius: small amounts (cents) use Intl for locale decimals ("4,50" in French).
+  if (decimals <= 6 && raw < BigInt(Number.MAX_SAFE_INTEGER)) {
+    return new Intl.NumberFormat(locale, {
+      minimumFractionDigits: maxFractionDigits,
+      maximumFractionDigits: maxFractionDigits,
+    }).format(Number(raw) / 10 ** decimals)
+  }
+  const negative = raw < 0n
+  const abs = negative ? -raw : raw
+  const base = 10n ** BigInt(decimals)
+  const whole = abs / base
+  const frac = abs % base
+
+  const wholeStr = new Intl.NumberFormat(locale).format(whole)
+  if (frac === 0n || maxFractionDigits === 0) {
+    return `${negative ? "-" : ""}${wholeStr}`
+  }
+  const fracStr = frac
+    .toString()
+    .padStart(decimals, "0")
+    .slice(0, maxFractionDigits)
+    .replace(/0+$/, "")
+  return fracStr
+    ? `${negative ? "-" : ""}${wholeStr}.${fracStr}`
+    : `${negative ? "-" : ""}${wholeStr}`
+}
+
+function formatUsd(
+  value: number,
+  currency: string,
+  locale?: string,
+  fractionDigits = 2
+) {
+  return new Intl.NumberFormat(locale, {
+    style: "currency",
+    currency,
+    maximumFractionDigits: fractionDigits,
+    minimumFractionDigits: fractionDigits,
+  }).format(value)
+}
+
+function TokenAmount({
+  value,
+  decimals = 18,
+  symbol,
+  fractionDigits = 4,
+  locale,
+  usdValue,
+  usdCurrency = "USD",
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLSpanElement> & {
+  value: bigint | string | number
+  decimals?: number
+  symbol?: string
+  fractionDigits?: number
+  locale?: string
+  usdValue?: number
+  usdCurrency?: string
+}) {
+  const formatted = formatBaseUnits(value, decimals, fractionDigits, locale)
+
+  return (
+    <span
+      data-slot="token-amount"
+      className={cn("inline-flex flex-col leading-tight", className)}
+      {...props}
+    >
+      <span className="inline-flex items-baseline gap-1 whitespace-nowrap tabular-nums">
+        <span>{formatted}</span>
+        {symbol && (
+          <span className="text-muted-foreground text-[0.7em] font-sans font-semibold tracking-wide">
+            {symbol}
+          </span>
+        )}
+      </span>
+      {typeof usdValue === "number" && (
+        <span className="text-muted-foreground text-xs tabular-nums">
+          {formatUsd(usdValue, usdCurrency, locale)}
+        </span>
+      )}
+    </span>
+  )
+}
+
+export { TokenAmount, formatBaseUnits, formatUsd }
